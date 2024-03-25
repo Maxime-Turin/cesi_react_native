@@ -1,16 +1,39 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image } from 'react-native';
-import {User} from './components/User';
+import { useState } from 'react';
+import { StyleSheet, Text, View, Image, Platform } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import {s} from './App.style';
+
+import {User} from './components/User';
 import { FlexDemo } from './components/FlexDemo';
 import { ScoreCounter } from './components/ScoreCounter';
+import { Child } from './components/Child';
+
 
 export default function App() {
+  const [age, setAge] = useState(0);
+
+  function hello(name){
+    setAge(age+1);
+  }
+
+  console.log(age);
+
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{backgroundColor: "red", flex:1}}>
         <View style={s.square}>
+          {Platform.OS ==="ios" ? (
+            <Text>IOS</Text>
+          ) : (
+            <Text>Android</Text>
+          )}
+        </View>
+        {/* <View style={s.square}>
+          <Child onPress={hello}></Child>
+        </View> */}
+        
+        {/* <View style={s.square}>
           <User
             firstName={'John'}
             lastName={'Doe'}
@@ -27,7 +50,7 @@ export default function App() {
             />
           </User>
           <ScoreCounter />
-        </View>
+        </View> */}
       </SafeAreaView>
     </SafeAreaProvider>
 
