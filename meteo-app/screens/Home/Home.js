@@ -6,6 +6,10 @@ import { MeteoAPI } from "../../api/meteo";
 import { Txt } from "../../components/Txt/Txt";
 import { MeteoBasic } from "../../components/MeteoBasic/MeteoBasic";
 import { getWeatherInterpretation } from "../../services/meteo-service";
+import { MeteoAdvanced } from "../../components/MeteoAdvanced/MeteoAdvanced";
+import {useNavigation} from '@react-navigation/native';
+import { Container } from "../../components/Container/Container";
+
 
 
 
@@ -15,6 +19,7 @@ const [coords, setCoords] = useState();
 const [weather, setWeather] = useState();
 const [city, setCity] = useState();
 const currentWeather = weather?.current_weather;
+const nav = useNavigation();
 
 useEffect(() => {
   getUserCoords();
@@ -54,14 +59,20 @@ async function fetchCity(coords) {
 };
 console.log(city);
 
+function goToForecastPage() {
+  nav.navigate('Forecast', {city, ...weather.daily});
+};
 
-  return currentWeather?(
+  return (
+    <Container>
+      {currentWeather ? (
     <>
       <View style={s.meteo_basic}>
         <MeteoBasic 
         temperature={Math.round(currentWeather?.temperature)}
         city={city}
         interpretation={getWeatherInterpretation(currentWeather.weathercode)}
+        onPress={goToForecastPage}
       />
       </View>
 
@@ -72,10 +83,14 @@ console.log(city);
       </View>
 
       <View style={s.meteo_advanced}>
-        <Txt style={{fontSize: 60, color: 'white'}}>
-          La météo avancée
-        </Txt>
+        <MeteoAdvanced
+          wind={currentWeather.windspeed}
+          dusk={weather.daily.sunrise[0].split('T')[1]}
+          dawn={weather.daily.sunset[0].split('T')[1]}
+        />
       </View>
     </>
-  ):null;
+  ) : null}
+    </Container>
+  )
 }
