@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { Alert, Text, View } from "react-native";
 import { s } from "./Home.style";
 import { requestForegroundPermissionsAsync, getCurrentPositionAsync } from 'expo-location';
 import { useEffect, useState } from "react";
@@ -9,6 +9,7 @@ import { getWeatherInterpretation } from "../../services/meteo-service";
 import { MeteoAdvanced } from "../../components/MeteoAdvanced/MeteoAdvanced";
 import {useNavigation} from '@react-navigation/native';
 import { Container } from "../../components/Container/Container";
+import { Searchbar } from "../../components/Searchbar/Searchbar";
 
 
 
@@ -59,6 +60,15 @@ async function fetchCity(coords) {
 };
 console.log(city);
 
+async function fetchCoordsByCity(city) {
+  try {
+    const coords = await MeteoAPI.fetchCoordsFromCity(city);
+    setCoords(coords);
+  } catch (e) {
+    Alert.alert("Une erreur s'est produite !", e.message);
+  }
+}
+
 function goToForecastPage() {
   nav.navigate('Forecast', {city, ...weather.daily});
 };
@@ -77,9 +87,7 @@ function goToForecastPage() {
       </View>
 
       <View style={s.searchbar_container}>
-        <Txt style={{fontSize: 60, color: 'white'}}>
-          Barre de recherche
-        </Txt>
+        <Searchbar onSubmit={fetchCoordsByCity}/>
       </View>
 
       <View style={s.meteo_advanced}>

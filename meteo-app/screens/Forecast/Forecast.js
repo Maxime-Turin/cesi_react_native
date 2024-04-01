@@ -1,15 +1,15 @@
-import { Txt } from "../../components/Txt/Txt";
-import {s} from './Forecast.style.js';
 import { Container } from "../../components/Container/Container.js";
-import {useRoute} from '@react-navigation/native';
+
+import { ForecastList } from "../../components/ForecastList/ForecastList.js";
+import { ForecastHeader } from "../../components/ForecastHeader/ForecastHeader.js";
 
 export function Forecast({}) {
-  const{params} = useRoute();
+
   return (
-    <>
     <Container>
-      <Txt>Forecast</Txt>
-    </Container>      
-    </>
+      <ForecastHeader />
+      <ForecastList />
+    </Container>
+
   )
 }

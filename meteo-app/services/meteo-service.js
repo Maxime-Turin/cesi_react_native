@@ -10,7 +10,7 @@ export const WEATHER_INTERPRETATIONS = [
     image: require('../assets/clouds.png'),
   },
   {
-    codes: [51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82, 85, 86, 87],
+    codes: [51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82, 85, 86, 87, 95],
     label: 'Pluvieux',
     image: require('../assets/rain.png'),
   },

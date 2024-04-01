@@ -12,7 +12,7 @@ const s = StyleSheet.create({
   image: {
     height: 90,
     width: 90,
-    backgroundColor: 'white',
+    backgroundColor: 'transparent',
   },
   temperature_box: {
     alignItems: 'baseline',
